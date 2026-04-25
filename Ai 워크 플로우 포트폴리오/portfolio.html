@@ -4,30 +4,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Workflow Leadership Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 /* ===== Reset & Base ===== */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --bg: #0a0a0f;
-  --bg-card: #12121a;
-  --bg-card-hover: #1a1a25;
-  --border: #1e1e2e;
-  --text: #e0e0e8;
-  --text-dim: #8888a0;
-  --text-muted: #555570;
-  --accent: #6c5ce7;
-  --accent-light: #a29bfe;
-  --human: #00b894;
-  --human-bg: rgba(0,184,148,0.08);
-  --ai: #6c5ce7;
-  --ai-bg: rgba(108,92,231,0.08);
-  --gradient-hero: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #00b894 100%);
+  --bg: #06060c;
+  --bg-card: rgba(16,16,28,0.7);
+  --bg-card-hover: rgba(24,24,40,0.8);
+  --border: rgba(255,255,255,0.06);
+  --border-glow: rgba(108,92,231,0.15);
+  --text: #eaeaf0;
+  --text-dim: #9090a8;
+  --text-muted: #5a5a78;
+  --accent: #7c6cf0;
+  --accent-light: #b0a4ff;
+  --human: #00d2a0;
+  --human-bg: rgba(0,210,160,0.1);
+  --ai: #7c6cf0;
+  --ai-bg: rgba(124,108,240,0.1);
+  --gradient-hero: linear-gradient(135deg, #7c6cf0 0%, #b0a4ff 40%, #00d2a0 100%);
+  --glow-purple: 0 0 60px rgba(108,92,231,0.15), 0 0 120px rgba(108,92,231,0.05);
+  --glow-green: 0 0 60px rgba(0,210,160,0.12), 0 0 120px rgba(0,210,160,0.04);
 }
 
 html { scroll-behavior: smooth; font-size: 16px; }
 body {
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.7;
@@ -38,11 +43,18 @@ a { color: var(--accent-light); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 /* Keyword highlights */
-.hl-accent { color: #a29bfe; font-weight: 700; }
+.hl-accent { color: #b0a4ff; font-weight: 700; }
 .hl-green { color: #55efc4; font-weight: 700; }
 .hl-orange { color: #fdcb6e; font-weight: 700; }
 .hl-coral { color: #ff7675; font-weight: 700; }
 .hl-blue { color: #74b9ff; font-weight: 700; }
+
+/* Scroll animation */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
 
 /* ===== Layout ===== */
 .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
@@ -51,44 +63,72 @@ section { padding: 6rem 0; }
 /* ===== Navigation ===== */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(10,10,15,0.85);
-  backdrop-filter: blur(20px);
+  background: rgba(6,6,12,0.7);
+  backdrop-filter: blur(24px) saturate(1.5);
   border-bottom: 1px solid var(--border);
+  transition: background 0.3s;
 }
 nav .container {
   display: flex; align-items: center; justify-content: space-between;
-  height: 60px;
+  height: 64px;
 }
-nav .logo { font-weight: 700; font-size: 1.1rem; color: var(--text); }
-nav .logo span { color: var(--accent-light); }
+nav .logo { font-weight: 800; font-size: 1.15rem; color: var(--text); letter-spacing: -0.02em; }
+nav .logo span {
+  background: var(--gradient-hero); -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; background-clip: text;
+}
 nav .nav-links { display: flex; gap: 2rem; list-style: none; }
 nav .nav-links a {
-  color: var(--text-dim); font-size: 0.85rem; font-weight: 500;
-  letter-spacing: 0.03em; transition: color 0.2s;
+  color: var(--text-muted); font-size: 0.82rem; font-weight: 600;
+  letter-spacing: 0.04em; transition: color 0.3s; text-transform: uppercase;
 }
-nav .nav-links a:hover { color: var(--text); text-decoration: none; }
+nav .nav-links a:hover { color: var(--accent-light); text-decoration: none; }
 
 /* ===== Hero ===== */
 .hero {
   min-height: 100vh; display: flex; align-items: center;
   position: relative; overflow: hidden;
 }
+#heroCanvas {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; opacity: 0.6;
+}
 .hero::before {
-  content: ''; position: absolute; top: -50%; right: -30%;
-  width: 800px; height: 800px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(108,92,231,0.08) 0%, transparent 70%);
-  pointer-events: none;
+  content: ''; position: absolute; top: -30%; right: -20%;
+  width: 900px; height: 900px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(124,108,240,0.12) 0%, rgba(0,210,160,0.04) 40%, transparent 70%);
+  pointer-events: none; animation: heroPulse 8s ease-in-out infinite;
+}
+.hero::after {
+  content: ''; position: absolute; bottom: -40%; left: -20%;
+  width: 700px; height: 700px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,210,160,0.08) 0%, transparent 60%);
+  pointer-events: none; animation: heroPulse 10s ease-in-out infinite reverse;
+}
+@keyframes heroPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.7; }
 }
 .hero-content { position: relative; z-index: 1; }
 .hero-label {
-  display: inline-block; font-size: 0.75rem; font-weight: 600;
-  color: var(--accent-light); letter-spacing: 0.15em; text-transform: uppercase;
-  margin-bottom: 1.5rem; padding: 0.4rem 1rem;
-  border: 1px solid rgba(108,92,231,0.3); border-radius: 100px;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.72rem; font-weight: 700;
+  color: var(--accent-light); letter-spacing: 0.18em; text-transform: uppercase;
+  margin-bottom: 2rem; padding: 0.5rem 1.2rem;
+  background: rgba(124,108,240,0.08);
+  border: 1px solid rgba(124,108,240,0.2); border-radius: 100px;
+}
+.hero-label::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent-light); animation: labelPulse 2s ease-in-out infinite;
+}
+@keyframes labelPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--accent-light); }
+  50% { opacity: 0.4; box-shadow: none; }
 }
 .hero h1 {
-  font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800;
-  line-height: 1.2; margin-bottom: 1.5rem;
+  font-size: clamp(2.4rem, 5.5vw, 3.8rem); font-weight: 900;
+  line-height: 1.15; margin-bottom: 1.8rem; letter-spacing: -0.03em;
 }
 .hero h1 .gradient {
   background: var(--gradient-hero);
@@ -96,68 +136,90 @@ nav .nav-links a:hover { color: var(--text); text-decoration: none; }
   background-clip: text;
 }
 .hero-desc {
-  font-size: 1.15rem; color: var(--text-dim); max-width: 600px;
-  margin-bottom: 2.5rem; line-height: 1.8;
+  font-size: 1.1rem; color: var(--text-dim); max-width: 580px;
+  margin-bottom: 3rem; line-height: 1.9;
 }
 .hero-stats {
-  display: flex; gap: 3rem; flex-wrap: wrap;
+  display: flex; gap: 3.5rem; flex-wrap: wrap;
+}
+.hero-stat {
+  position: relative; padding-left: 1rem;
+}
+.hero-stat::before {
+  content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 2px;
+  background: linear-gradient(180deg, var(--accent), var(--human));
+  border-radius: 2px;
 }
 .hero-stat .number {
-  font-size: 2rem; font-weight: 800; color: var(--accent-light);
+  font-size: 2.2rem; font-weight: 900; letter-spacing: -0.03em;
+  background: var(--gradient-hero); -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; background-clip: text;
 }
 .hero-stat .label {
-  font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;
+  font-size: 0.72rem; color: var(--text-muted); margin-top: 0.15rem;
+  font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
 }
 
 /* ===== Section Headers ===== */
 .section-label {
-  display: inline-block; font-size: 0.7rem; font-weight: 700;
-  color: var(--accent-light); letter-spacing: 0.15em; text-transform: uppercase;
-  margin-bottom: 1rem;
+  display: inline-block; font-size: 0.65rem; font-weight: 700;
+  color: var(--accent-light); letter-spacing: 0.2em; text-transform: uppercase;
+  margin-bottom: 1.2rem; opacity: 0.7;
 }
 .section-title {
-  font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700;
-  margin-bottom: 1rem; line-height: 1.3;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800;
+  margin-bottom: 1.2rem; line-height: 1.25; letter-spacing: -0.02em;
 }
 .section-desc {
-  font-size: 1rem; color: var(--text-dim); max-width: 650px;
-  margin-bottom: 3rem; line-height: 1.8;
+  font-size: 1rem; color: var(--text-dim); max-width: 640px;
+  margin-bottom: 3.5rem; line-height: 1.85;
 }
 
 /* ===== Vision Section ===== */
-#vision { border-bottom: 1px solid var(--border); }
+#vision {
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
 
 .vision-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
   margin-bottom: 3rem;
 }
 .vision-card {
   background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 12px; padding: 2rem; transition: all 0.3s;
+  border-radius: 16px; padding: 2rem; transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+  backdrop-filter: blur(10px); position: relative; overflow: hidden;
+}
+.vision-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(124,108,240,0.3), transparent);
+  opacity: 0; transition: opacity 0.4s;
 }
 .vision-card:hover {
-  background: var(--bg-card-hover); border-color: rgba(108,92,231,0.3);
-  transform: translateY(-2px);
+  background: var(--bg-card-hover); border-color: var(--border-glow);
+  transform: translateY(-4px); box-shadow: var(--glow-purple);
 }
+.vision-card:hover::before { opacity: 1; }
 .vision-card .icon {
-  width: 40px; height: 40px; border-radius: 10px;
+  width: 44px; height: 44px; border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.2rem; margin-bottom: 1rem;
+  font-size: 1.3rem; margin-bottom: 1.2rem;
 }
 .vision-card .icon.human-icon { background: var(--human-bg); }
 .vision-card .icon.ai-icon { background: var(--ai-bg); }
-.vision-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.6rem; }
-.vision-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.7; }
+.vision-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.7rem; letter-spacing: -0.01em; }
+.vision-card p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.75; }
 
 .vision-quote {
   background: var(--bg-card); border-left: 3px solid var(--accent);
-  border-radius: 0 12px 12px 0; padding: 2rem 2.5rem;
-  font-size: 1.1rem; font-style: italic; color: var(--text-dim); line-height: 1.8;
+  border-radius: 0 16px 16px 0; padding: 2.5rem 3rem;
+  font-size: 1.15rem; font-style: italic; color: var(--text-dim); line-height: 1.85;
+  backdrop-filter: blur(10px); box-shadow: var(--glow-purple);
 }
 .vision-quote strong { color: var(--text); font-style: normal; }
 
 /* ===== Pipeline Section ===== */
-#pipeline { border-bottom: 1px solid var(--border); }
+#pipeline { border-bottom: 1px solid var(--border); position: relative; }
 
 .pipeline-flow {
   position: relative; display: flex; flex-direction: column; gap: 0;
@@ -170,53 +232,77 @@ nav .nav-links a:hover { color: var(--text); text-decoration: none; }
   position: relative;
 }
 .pipeline-step .step-dot {
-  width: 36px; height: 36px; border-radius: 50%;
+  width: 40px; height: 40px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: 0.75rem; font-weight: 700; color: #fff;
   position: relative; z-index: 2; flex-shrink: 0;
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
 }
-.pipeline-step .step-dot.human { background: var(--human); }
-.pipeline-step .step-dot.ai { background: var(--ai); }
+.pipeline-step .step-dot.human {
+  background: var(--human);
+  box-shadow: 0 0 20px rgba(0,210,160,0.25), 0 0 40px rgba(0,210,160,0.1);
+}
+.pipeline-step .step-dot.ai {
+  background: var(--ai);
+  box-shadow: 0 0 20px rgba(124,108,240,0.3), 0 0 40px rgba(124,108,240,0.1);
+}
 .pipeline-step .step-dot.both {
   background: linear-gradient(135deg, var(--human) 50%, var(--ai) 50%);
+  box-shadow: 0 0 20px rgba(0,210,160,0.15), 0 0 20px rgba(124,108,240,0.15);
+}
+.pipeline-step:hover .step-dot {
+  transform: scale(1.15);
+  filter: brightness(1.2);
 }
 .pipeline-step .step-connector {
   width: 2px; flex: 1; min-height: 40px;
-  background: var(--border);
+  background: linear-gradient(180deg, rgba(124,108,240,0.3), rgba(0,210,160,0.1));
 }
 .pipeline-step:last-child .step-connector { display: none; }
 
 .pipeline-step .step-content {
-  padding: 0 0 2.5rem 1.5rem;
+  padding: 0.2rem 0 2.5rem 1.5rem;
+  transition: all 0.3s;
 }
 .pipeline-step .step-header {
   display: flex; align-items: center; gap: 0.8rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem; flex-wrap: wrap;
 }
-.pipeline-step .step-title { font-size: 1rem; font-weight: 700; }
+.pipeline-step .step-title { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; }
 .pipeline-step .step-badge {
-  font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.6rem;
+  font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.7rem;
   border-radius: 100px; letter-spacing: 0.05em;
 }
-.step-badge.human-badge { background: var(--human-bg); color: var(--human); }
-.step-badge.ai-badge { background: var(--ai-bg); color: var(--accent-light); }
+.step-badge.human-badge { background: var(--human-bg); color: var(--human); border: 1px solid rgba(0,210,160,0.15); }
+.step-badge.ai-badge { background: var(--ai-bg); color: var(--accent-light); border: 1px solid rgba(124,108,240,0.15); }
 .step-badge.both-badge {
   background: linear-gradient(135deg, var(--human-bg), var(--ai-bg));
-  color: var(--text-dim);
+  color: var(--text-dim); border: 1px solid rgba(124,108,240,0.1);
 }
 .pipeline-step .step-agent {
-  font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.6rem;
-  border-radius: 100px; background: rgba(108,92,231,0.12);
+  font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.7rem;
+  border-radius: 100px; background: rgba(108,92,231,0.1);
   color: var(--accent-light); letter-spacing: 0.03em;
   border: 1px solid rgba(108,92,231,0.2);
+  transition: all 0.3s;
+}
+.pipeline-step:hover .step-agent {
+  background: rgba(108,92,231,0.18);
+  border-color: rgba(108,92,231,0.35);
 }
 .pipeline-step .step-desc {
   font-size: 0.88rem; color: var(--text-dim); line-height: 1.7;
 }
 .pipeline-step .step-detail {
-  margin-top: 0.8rem; padding: 1rem 1.2rem;
+  margin-top: 0.8rem; padding: 1.2rem 1.4rem;
   background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 8px; font-size: 0.82rem; color: var(--text-dim); line-height: 1.7;
+  border-radius: 10px; font-size: 0.82rem; color: var(--text-dim); line-height: 1.7;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s;
+}
+.pipeline-step:hover .step-detail {
+  border-color: var(--border-glow);
+  box-shadow: var(--glow-purple);
 }
 
 .pipeline-legend {
@@ -225,25 +311,35 @@ nav .nav-links a:hover { color: var(--text); text-decoration: none; }
 }
 .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: var(--text-dim); }
 .legend-dot { width: 12px; height: 12px; border-radius: 50%; }
-.legend-dot.human { background: var(--human); }
-.legend-dot.ai { background: var(--ai); }
+.legend-dot.human { background: var(--human); box-shadow: 0 0 8px rgba(0,210,160,0.4); }
+.legend-dot.ai { background: var(--ai); box-shadow: 0 0 8px rgba(124,108,240,0.4); }
 
 /* Harness Callout */
 .harness-callout {
-  margin-top: 2.5rem; padding: 2rem 2.5rem;
+  margin-top: 2.5rem; padding: 2.2rem 2.5rem;
   background: linear-gradient(135deg, rgba(108,92,231,0.06), rgba(0,184,148,0.06));
-  border: 1px solid rgba(108,92,231,0.2); border-radius: 12px;
+  border: 1px solid rgba(108,92,231,0.2); border-radius: 16px;
+  position: relative; overflow: hidden;
+  transition: all 0.4s;
+}
+.harness-callout::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,210,160,0.4), rgba(124,108,240,0.4), transparent);
+}
+.harness-callout:hover {
+  border-color: rgba(108,92,231,0.35);
+  box-shadow: 0 0 40px rgba(108,92,231,0.08), 0 0 80px rgba(0,210,160,0.04);
 }
 .harness-callout-header {
   display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;
 }
 .harness-callout-icon { font-size: 1.3rem; }
-.harness-callout h3 { font-size: 1rem; font-weight: 700; color: var(--text); }
+.harness-callout h3 { font-size: 1.05rem; font-weight: 700; color: var(--text); }
 .harness-callout p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.8; }
 .harness-callout strong { color: var(--accent-light); }
 
 /* ===== Knowledge Layer ===== */
-#knowledge { border-bottom: 1px solid var(--border); }
+#knowledge { border-bottom: 1px solid var(--border); position: relative; }
 
 .knowledge-flow {
   display: flex; align-items: center; gap: 0;
@@ -251,60 +347,95 @@ nav .nav-links a:hover { color: var(--text); text-decoration: none; }
 }
 .k-node {
   background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 12px; padding: 1.5rem 1.8rem; text-align: center;
-  min-width: 160px; transition: all 0.3s;
+  border-radius: 14px; padding: 1.5rem 1.8rem; text-align: center;
+  min-width: 160px; transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+  backdrop-filter: blur(10px); position: relative; overflow: hidden;
 }
-.k-node:hover { border-color: rgba(108,92,231,0.4); transform: translateY(-2px); }
-.k-node .k-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-.k-node .k-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; }
-.k-node .k-desc { font-size: 0.75rem; color: var(--text-muted); }
+.k-node::after {
+  content: ''; position: absolute; inset: 0; border-radius: 14px;
+  background: radial-gradient(circle at 50% 0%, rgba(124,108,240,0.08) 0%, transparent 70%);
+  opacity: 0; transition: opacity 0.4s;
+}
+.k-node:hover {
+  border-color: rgba(108,92,231,0.4); transform: translateY(-4px);
+  box-shadow: var(--glow-purple);
+}
+.k-node:hover::after { opacity: 1; }
+.k-node .k-icon { font-size: 1.6rem; margin-bottom: 0.6rem; position: relative; z-index: 1; }
+.k-node .k-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; position: relative; z-index: 1; }
+.k-node .k-desc { font-size: 0.75rem; color: var(--text-muted); position: relative; z-index: 1; }
 .k-arrow {
-  font-size: 1.2rem; color: var(--text-muted); padding: 0 0.8rem;
-  flex-shrink: 0;
+  font-size: 1.2rem; color: var(--accent); padding: 0 0.8rem;
+  flex-shrink: 0; opacity: 0.5;
 }
 
 .knowledge-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; }
 .k-card {
   background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 12px; padding: 2rem; transition: all 0.3s;
+  border-radius: 16px; padding: 2rem; transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+  backdrop-filter: blur(10px); position: relative; overflow: hidden;
 }
-.k-card:hover { border-color: rgba(108,92,231,0.3); }
-.k-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.8rem; }
+.k-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(124,108,240,0.3), transparent);
+  opacity: 0; transition: opacity 0.4s;
+}
+.k-card:hover {
+  border-color: var(--border-glow); transform: translateY(-4px);
+  box-shadow: var(--glow-purple);
+}
+.k-card:hover::before { opacity: 1; }
+.k-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.8rem; letter-spacing: -0.01em; }
 .k-card .k-card-tag {
   display: inline-block; font-size: 0.65rem; font-weight: 700;
-  padding: 0.15rem 0.5rem; border-radius: 4px; margin-bottom: 1rem;
+  padding: 0.2rem 0.6rem; border-radius: 6px; margin-bottom: 1rem;
+  letter-spacing: 0.04em;
 }
-.k-card .k-card-tag.ai-tag { background: var(--ai-bg); color: var(--accent-light); }
-.k-card .k-card-tag.human-tag { background: var(--human-bg); color: var(--human); }
-.k-card .k-card-tag.team-tag { background: rgba(253,203,110,0.1); color: #fdcb6e; }
+.k-card .k-card-tag.ai-tag { background: var(--ai-bg); color: var(--accent-light); border: 1px solid rgba(124,108,240,0.15); }
+.k-card .k-card-tag.human-tag { background: var(--human-bg); color: var(--human); border: 1px solid rgba(0,210,160,0.15); }
+.k-card .k-card-tag.team-tag { background: rgba(253,203,110,0.1); color: #fdcb6e; border: 1px solid rgba(253,203,110,0.15); }
 .k-card ul { list-style: none; }
 .k-card li {
-  font-size: 0.88rem; color: var(--text-dim); padding: 0.4rem 0;
-  padding-left: 1.2rem; position: relative; line-height: 1.6;
+  font-size: 0.88rem; color: var(--text-dim); padding: 0.5rem 0;
+  padding-left: 1.4rem; position: relative; line-height: 1.65;
 }
 .k-card li::before {
-  content: '→'; position: absolute; left: 0; color: var(--text-muted);
+  content: '→'; position: absolute; left: 0; color: var(--accent); opacity: 0.5;
 }
 
 /* ===== KPI Section ===== */
-#kpi { border-bottom: 1px solid var(--border); }
+#kpi { border-bottom: 1px solid var(--border); position: relative; }
 
 .kpi-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
 .kpi-card {
   background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 12px; padding: 2rem; transition: all 0.3s;
+  border-radius: 16px; padding: 2rem; transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+  backdrop-filter: blur(10px); position: relative; overflow: hidden;
 }
-.kpi-card:hover { border-color: rgba(108,92,231,0.3); }
-.kpi-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.8rem; }
+.kpi-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(124,108,240,0.3), transparent);
+  opacity: 0; transition: opacity 0.4s;
+}
+.kpi-card:hover {
+  border-color: var(--border-glow); transform: translateY(-3px);
+  box-shadow: var(--glow-purple);
+}
+.kpi-card:hover::before { opacity: 1; }
+.kpi-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.8rem; letter-spacing: -0.01em; }
 .kpi-card-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem; }
 .kpi-icon { font-size: 1.5rem; }
 .kpi-icon-sm { font-size: 1.2rem; display: block; margin-bottom: 0.8rem; }
-.kpi-card.kpi-main { border-color: rgba(108,92,231,0.25); }
+.kpi-card.kpi-main {
+  border-color: rgba(108,92,231,0.25);
+  box-shadow: 0 0 40px rgba(108,92,231,0.06);
+}
 .kpi-formula {
   display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;
   margin-bottom: 1.5rem; padding: 1.2rem 1.5rem;
-  background: rgba(108,92,231,0.04); border-radius: 8px;
+  background: rgba(108,92,231,0.04); border-radius: 10px;
   font-size: 0.95rem; font-weight: 600;
+  border: 1px solid rgba(108,92,231,0.08);
 }
 .kpi-plus { color: var(--human); }
 .kpi-operator { color: var(--text-muted); font-size: 1.2rem; }
@@ -344,39 +475,60 @@ nav .nav-links a:hover { color: var(--text); text-decoration: none; }
 }
 
 /* ===== About Section ===== */
-#about { padding-bottom: 8rem; }
+#about { padding-bottom: 8rem; position: relative; }
 .about-content {
   display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;
 }
 .about-text p {
-  font-size: 0.95rem; color: var(--text-dim); line-height: 1.8;
+  font-size: 0.95rem; color: var(--text-dim); line-height: 1.85;
   margin-bottom: 1.2rem;
 }
 .about-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
 .about-tag {
-  font-size: 0.75rem; font-weight: 600; padding: 0.4rem 0.8rem;
+  font-size: 0.75rem; font-weight: 600; padding: 0.45rem 0.9rem;
   background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 6px; color: var(--text-dim);
+  border-radius: 8px; color: var(--text-dim);
+  transition: all 0.3s; backdrop-filter: blur(10px);
+}
+.about-tag:hover {
+  border-color: var(--border-glow); color: var(--accent-light);
+  box-shadow: 0 0 16px rgba(108,92,231,0.1);
 }
 
 .about-timeline { display: flex; flex-direction: column; gap: 1.5rem; }
 .timeline-item {
   background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 12px; padding: 1.5rem; transition: all 0.3s;
+  border-radius: 16px; padding: 1.8rem; transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+  backdrop-filter: blur(10px); position: relative; overflow: hidden;
 }
-.timeline-item:hover { border-color: rgba(108,92,231,0.3); }
+.timeline-item::before {
+  content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 2px;
+  background: linear-gradient(180deg, var(--accent), var(--human));
+  opacity: 0; transition: opacity 0.4s;
+}
+.timeline-item:hover {
+  border-color: var(--border-glow); transform: translateY(-3px);
+  box-shadow: var(--glow-purple);
+}
+.timeline-item:hover::before { opacity: 1; }
 .timeline-year {
   font-size: 0.7rem; font-weight: 700; color: var(--accent-light);
-  letter-spacing: 0.1em; margin-bottom: 0.3rem;
+  letter-spacing: 0.1em; margin-bottom: 0.4rem;
 }
-.timeline-role { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; }
-.timeline-desc { font-size: 0.82rem; color: var(--text-dim); }
+.timeline-role { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
+.timeline-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.7; }
 
 /* ===== Footer ===== */
 footer {
   border-top: 1px solid var(--border);
-  padding: 2rem 0; text-align: center;
-  font-size: 0.8rem; color: var(--text-muted);
+  padding: 2.5rem 0; text-align: center;
+  font-size: 0.78rem; color: var(--text-muted);
+  position: relative;
+}
+footer::before {
+  content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 200px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(124,108,240,0.3), transparent);
 }
 
 /* ===== Responsive ===== */
@@ -410,6 +562,7 @@ footer {
 
 <!-- Hero -->
 <section class="hero" id="hero">
+  <canvas id="heroCanvas"></canvas>
   <div class="container">
     <div class="hero-content">
       <span class="hero-label">AI Workflow Leadership</span>
@@ -442,8 +595,8 @@ footer {
 <!-- Vision -->
 <section id="vision">
   <div class="container">
-    <span class="section-label">01 — Vision</span>
-    <h2 class="section-title">기술이 아니라 사람의 문제입니다</h2>
+    <span class="section-label reveal">01 — Vision</span>
+    <h2 class="section-title reveal">기술이 아니라 사람의 문제입니다</h2>
     <p class="section-desc">
       AI 도입의 가장 큰 장벽은 기술이 아닙니다.
       "내 일을 빼앗기는 건 아닌가"라는 불안, 익숙한 방식을 바꿔야 한다는 <span class="hl-coral">저항</span> —
@@ -451,7 +604,7 @@ footer {
     </p>
 
     <div class="vision-grid">
-      <div class="vision-card">
+      <div class="vision-card reveal reveal-delay-1">
         <div class="icon human-icon">🎯</div>
         <h3>제품을 위한 개발</h3>
         <p>
@@ -460,7 +613,7 @@ footer {
           이 <span class="hl-accent">관점 전환</span>이 AI 도입의 출발점입니다.
         </p>
       </div>
-      <div class="vision-card">
+      <div class="vision-card reveal reveal-delay-2">
         <div class="icon human-icon">🔄</div>
         <h3>역할의 수평 확장</h3>
         <p>
@@ -469,7 +622,7 @@ footer {
           더 넓은 시야에서 제품 전체를 조망할 수 있게 됩니다.
         </p>
       </div>
-      <div class="vision-card">
+      <div class="vision-card reveal reveal-delay-1">
         <div class="icon ai-icon">⚡</div>
         <h3>직관은 계속 진화한다</h3>
         <p>
@@ -478,7 +631,7 @@ footer {
           이 직관은 멈추지 않고 <span class="hl-accent">계속 개발</span>해야 합니다.
         </p>
       </div>
-      <div class="vision-card">
+      <div class="vision-card reveal reveal-delay-2">
         <div class="icon human-icon">🤝</div>
         <h3>개발자 출신의 커뮤니케이션</h3>
         <p>
@@ -489,7 +642,7 @@ footer {
       </div>
     </div>
 
-    <div class="vision-quote">
+    <div class="vision-quote reveal">
       "AI에게 코딩을 맡기는 것은 개발자를 대체하는 것이 아닙니다.<br>
       <strong>개발자가 더 높은 곳에서 제품을 바라볼 수 있게 하는 것</strong>입니다."
     </div>
@@ -499,14 +652,14 @@ footer {
 <!-- Pipeline -->
 <section id="pipeline">
   <div class="container">
-    <span class="section-label">02 — Pipeline</span>
-    <h2 class="section-title">기획이 제품이 되기까지</h2>
+    <span class="section-label reveal">02 — Pipeline</span>
+    <h2 class="section-title reveal">기획이 제품이 되기까지</h2>
     <p class="section-desc">
       기획서가 드롭되는 순간부터 PR이 머지되는 순간까지.
       <span class="hl-green">사람이 판단</span>하는 지점과 <span class="hl-accent">AI가 실행</span>하는 지점이 명확히 구분됩니다.
     </p>
 
-    <div class="pipeline-flow">
+    <div class="pipeline-flow reveal">
       <!-- Step 1 -->
       <div class="pipeline-step">
         <div class="step-line">
@@ -683,7 +836,7 @@ footer {
     </div>
 
     <!-- Harness callout -->
-    <div class="harness-callout">
+    <div class="harness-callout reveal">
       <div class="harness-callout-header">
         <span class="harness-callout-icon">🔧</span>
         <h3>개발자의 새로운 핵심 업무 — 하네스의 관리와 진화</h3>
@@ -713,15 +866,15 @@ footer {
 <!-- Knowledge Layer -->
 <section id="knowledge">
   <div class="container">
-    <span class="section-label">03 — Knowledge Layer</span>
-    <h2 class="section-title">확정된 기획이 AI의 재료가 되기까지</h2>
+    <span class="section-label reveal">03 — Knowledge Layer</span>
+    <h2 class="section-title reveal">확정된 기획이 AI의 재료가 되기까지</h2>
     <p class="section-desc">
       AI에게 잘 물어보는 것만으로는 부족합니다.
       <span class="hl-orange">정제된 지식 기반</span>이 결과의 신뢰도를 결정합니다.
       <span class="hl-coral">Hallucination을 최소화</span>하고, 기획 의도에 정확히 부합하는 결과를 만드는 구조입니다.
     </p>
 
-    <div class="knowledge-flow">
+    <div class="knowledge-flow reveal">
       <div class="k-node">
         <div class="k-icon">📋</div>
         <div class="k-title">확정된 기획서</div>
@@ -754,7 +907,7 @@ footer {
     </div>
 
     <div class="knowledge-cards">
-      <div class="k-card">
+      <div class="k-card reveal reveal-delay-1">
         <span class="k-card-tag ai-tag">FOR AI</span>
         <h3>AI의 정보 접근성 향상</h3>
         <ul>
@@ -764,7 +917,7 @@ footer {
           <li>프로젝트 전체 관계를 파악한 일관된 코드 생성</li>
         </ul>
       </div>
-      <div class="k-card">
+      <div class="k-card reveal reveal-delay-2">
         <span class="k-card-tag human-tag">FOR HUMAN</span>
         <h3>사람의 구조 파악 가속</h3>
         <ul>
@@ -774,7 +927,7 @@ footer {
           <li>변경 영향도를 시각적으로 추적 가능</li>
         </ul>
       </div>
-      <div class="k-card">
+      <div class="k-card reveal reveal-delay-3">
         <span class="k-card-tag team-tag">FOR TEAM</span>
         <h3>팀 역량의 축적</h3>
         <ul>
@@ -791,15 +944,15 @@ footer {
 <!-- KPI Innovation -->
 <section id="kpi">
   <div class="container">
-    <span class="section-label">04 — KPI Innovation</span>
-    <h2 class="section-title">AI 기반 개발이 가능하게 하는 KPI의 혁신</h2>
+    <span class="section-label reveal">04 — KPI Innovation</span>
+    <h2 class="section-title reveal">AI 기반 개발이 가능하게 하는 KPI의 혁신</h2>
     <p class="section-desc">
       AI가 코드를 생성하고, 하네스가 품질을 보증하는 표준화된 파이프라인에서는
       기존에 측정하기 어려웠던 개발 생산성을 정량적으로 측정할 수 있게 됩니다.
     </p>
 
     <div class="kpi-grid">
-      <div class="kpi-card kpi-main">
+      <div class="kpi-card kpi-main reveal">
         <div class="kpi-card-header">
           <span class="kpi-icon">📈</span>
           <h3>순수 코드 생산량 (Net Code Output)</h3>
@@ -819,20 +972,21 @@ footer {
       </div>
 
       <!-- Real Data Chart -->
-      <div class="kpi-card kpi-chart-card" style="grid-column: 1 / -1;">
+      <div class="kpi-card kpi-chart-card reveal" style="grid-column: 1 / -1;">
         <div class="kpi-card-header">
           <span class="kpi-icon">📊</span>
-          <h3>실제 프로젝트 데이터 — AI 기반 1인 개발 18일간의 기록</h3>
+          <h3>실제 프로젝트 데이터 — AI 기반 1인 개발 한 달간의 기록</h3>
         </div>
         <p class="kpi-desc" style="margin-bottom:1.5rem;">
           아래는 실제 AI 워크플로우로 개발 중인 게임 프로젝트의 <span class="hl-accent">일별 코드 생산량</span>입니다.
-          바의 전체 높이가 해당일의 총 추가량이며, 기준선 위가 <span class="hl-green">순수 생산량</span>,
+          기준선 위가 <span class="hl-green">순수 생산량(Net)</span>,
           기준선 아래가 <span class="hl-coral">삭제량(리팩토링)</span>입니다.
         </p>
-        <canvas id="kpiChart" width="1000" height="400" style="width:100%; height:auto;"></canvas>
+        <canvas id="kpiChart" width="1100" height="500" style="width:100%; height:auto;"></canvas>
         <script>
         (function(){
           const data = [
+            {date:'3/24', net:10389, del:-180, tag:'신규'},
             {date:'3/25', net:1522, del:-1202},
             {date:'3/26', net:726, del:-388},
             {date:'3/27', net:514, del:-816},
@@ -849,17 +1003,31 @@ footer {
             {date:'4/7', net:4, del:-917},
             {date:'4/8', net:104, del:-816},
             {date:'4/9', net:570, del:-294},
-            {date:'4/10', net:1082, del:-356}
+            {date:'4/10', net:1314, del:-428},
+            {date:'4/11', net:47, del:-562},
+            {date:'4/12', net:3924, del:-27641, tag:'C#전환'},
+            {date:'4/13', net:962, del:-10074},
+            {date:'4/14', net:2627, del:-1912},
+            {date:'4/15', net:1252, del:-3925},
+            {date:'4/16', net:-55, del:-4419},
+            {date:'4/17', net:1599, del:-982},
+            {date:'4/18', net:1973, del:-541},
+            {date:'4/19', net:1171, del:-129},
+            {date:'4/20', net:709, del:-3162},
+            {date:'4/21', net:1200, del:-4898},
+            {date:'4/22', net:597, del:-3785},
+            {date:'4/23', net:4232, del:-4220},
+            {date:'4/24', net:0, del:0, tag:'문서'}
           ];
           const canvas = document.getElementById('kpiChart');
           const ctx = canvas.getContext('2d');
           const W = canvas.width, H = canvas.height;
-          const pad = {top:30, right:20, bottom:40, left:65};
+          const pad = {top:30, right:20, bottom:44, left:65};
           const cw = W - pad.left - pad.right;
           const ch = H - pad.top - pad.bottom;
 
-          const maxPos = 3500;
-          const maxNeg = 1200;
+          const maxPos = 11000;
+          const maxNeg = 28000;
           const total = maxPos + maxNeg;
           const zeroY = pad.top + (maxPos / total) * ch;
 
@@ -871,33 +1039,54 @@ footer {
           ctx.fillRect(0, 0, W, H);
 
           // Grid lines
-          ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+          ctx.strokeStyle = 'rgba(255,255,255,0.05)';
           ctx.lineWidth = 1;
-          const ticks = [3000,2000,1000,0,-1000];
-          ticks.forEach(t => {
+          [10000,5000,0,-5000,-10000,-15000,-20000,-25000].forEach(t => {
             const y = t >= 0 ? yPos(t) : yNeg(t);
             ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
           });
 
           // Y-axis labels
           ctx.fillStyle = '#555570';
-          ctx.font = '11px -apple-system, sans-serif';
+          ctx.font = '10px Inter, -apple-system, sans-serif';
           ctx.textAlign = 'right';
-          ticks.forEach(t => {
+          [10000,5000,-5000,-10000,-20000].forEach(t => {
             const y = t >= 0 ? yPos(t) : yNeg(t);
-            ctx.fillText(t.toLocaleString(), pad.left - 10, y + 4);
+            const label = (t > 0 ? '+' : '') + (t/1000) + 'k';
+            ctx.fillText(label, pad.left - 8, y + 4);
           });
 
-          // Zero line (bold)
-          ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+          // Zero line
+          ctx.strokeStyle = 'rgba(255,255,255,0.25)';
           ctx.lineWidth = 1.5;
           ctx.beginPath(); ctx.moveTo(pad.left, zeroY); ctx.lineTo(W - pad.right, zeroY); ctx.stroke();
 
-          // Bars
-          const barGap = 6;
-          const barW = (cw - barGap * (data.length + 1)) / data.length;
-          const barR = 3;
+          // "0" label
+          ctx.fillStyle = '#8888a0';
+          ctx.font = 'bold 11px Inter, -apple-system, sans-serif';
+          ctx.textAlign = 'right';
+          ctx.fillText('0', pad.left - 8, zeroY + 4);
 
+          // Phase divider — between 4/11(index 18) and 4/12(index 19)
+          const barGap = 3;
+          const barW = (cw - barGap * (data.length + 1)) / data.length;
+          const barR = 2;
+          const phaseIdx = 18.5;
+          const phaseX = pad.left + barGap + phaseIdx * (barW + barGap);
+          ctx.strokeStyle = 'rgba(176,164,255,0.25)';
+          ctx.setLineDash([4,4]);
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(phaseX, pad.top); ctx.lineTo(phaseX, H - pad.bottom); ctx.stroke();
+          ctx.setLineDash([]);
+
+          // Phase labels
+          ctx.fillStyle = 'rgba(176,164,255,0.35)';
+          ctx.font = '9px Inter, -apple-system, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('GDScript only', pad.left + (phaseX - pad.left) / 2, pad.top - 8);
+          ctx.fillText('GDScript + C#', phaseX + (W - pad.right - phaseX) / 2, pad.top - 8);
+
+          // Bars
           data.forEach((d, i) => {
             const x = pad.left + barGap + i * (barW + barGap);
 
@@ -915,82 +1104,95 @@ footer {
               ctx.lineTo(x + barW, zeroY);
               ctx.closePath();
               ctx.fill();
+            } else if(d.net < 0) {
+              const h = (Math.abs(d.net) / total) * ch;
+              ctx.fillStyle = '#ff7675';
+              ctx.beginPath();
+              ctx.moveTo(x, zeroY);
+              ctx.lineTo(x, zeroY + h - barR);
+              ctx.quadraticCurveTo(x, zeroY + h, x + barR, zeroY + h);
+              ctx.lineTo(x + barW - barR, zeroY + h);
+              ctx.quadraticCurveTo(x + barW, zeroY + h, x + barW, zeroY + h - barR);
+              ctx.lineTo(x + barW, zeroY);
+              ctx.closePath();
+              ctx.fill();
             }
 
             // Red bar (deletion) — goes DOWN from zero
             if(d.del < 0){
               const h = (Math.abs(d.del) / total) * ch;
-              const y = zeroY;
-              ctx.fillStyle = '#ff7675';
+              ctx.fillStyle = 'rgba(255,118,117,0.35)';
               ctx.beginPath();
-              ctx.moveTo(x, y);
-              ctx.lineTo(x, y + h - barR);
-              ctx.quadraticCurveTo(x, y + h, x + barR, y + h);
-              ctx.lineTo(x + barW - barR, y + h);
-              ctx.quadraticCurveTo(x + barW, y + h, x + barW, y + h - barR);
-              ctx.lineTo(x + barW, y);
+              ctx.moveTo(x, zeroY);
+              ctx.lineTo(x, zeroY + h - barR);
+              ctx.quadraticCurveTo(x, zeroY + h, x + barR, zeroY + h);
+              ctx.lineTo(x + barW - barR, zeroY + h);
+              ctx.quadraticCurveTo(x + barW, zeroY + h, x + barW, zeroY + h - barR);
+              ctx.lineTo(x + barW, zeroY);
               ctx.closePath();
               ctx.fill();
             }
 
             // Date label
             ctx.fillStyle = '#555570';
-            ctx.font = '10px -apple-system, sans-serif';
+            ctx.font = '9px Inter, -apple-system, sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText(d.date, x + barW/2, H - pad.bottom + 18);
+            if(i % 2 === 0 || i === data.length - 1){
+              ctx.fillText(d.date, x + barW/2, H - pad.bottom + 16);
+            }
 
-            // Value labels for notable bars
-            if(d.net > 1500 || d.net < 10 || i === 0){
-              if(d.net > 0){
-                ctx.fillStyle = '#55efc4';
-                ctx.font = 'bold 10px -apple-system, sans-serif';
-                ctx.fillText('+' + d.net.toLocaleString(), x + barW/2, yPos(d.net) - 6);
-              }
-              if(Math.abs(d.del) > 800){
-                ctx.fillStyle = '#ff7675';
-                ctx.font = 'bold 10px -apple-system, sans-serif';
-                ctx.fillText(d.del.toLocaleString(), x + barW/2, yNeg(d.del) + 14);
-              }
+            // Tag labels (신규, C#전환, 문서)
+            if(d.tag){
+              ctx.fillStyle = 'rgba(176,164,255,0.6)';
+              ctx.font = 'bold 8px Inter, -apple-system, sans-serif';
+              const tagY = d.net > 2000 ? yPos(d.net) - 14 : yPos(Math.max(d.net, 500)) - 14;
+              ctx.fillText(d.tag, x + barW/2, tagY);
+            }
+
+            // Value labels for peaks
+            if(d.net >= 3500){
+              ctx.fillStyle = '#55efc4';
+              ctx.font = 'bold 8px Inter, -apple-system, sans-serif';
+              ctx.fillText('+' + d.net.toLocaleString(), x + barW/2, yPos(d.net) - 4);
+            }
+            if(d.del <= -10000){
+              ctx.fillStyle = '#ff7675';
+              ctx.font = 'bold 8px Inter, -apple-system, sans-serif';
+              ctx.fillText(Math.round(d.del/1000) + 'k', x + barW/2, yNeg(d.del) + 12);
             }
           });
-
-          // "0" label highlight
-          ctx.fillStyle = '#8888a0';
-          ctx.font = 'bold 12px -apple-system, sans-serif';
-          ctx.textAlign = 'right';
-          ctx.fillText('0', pad.left - 10, zeroY + 4);
         })();
         </script>
         <!-- Chart legend -->
         <div class="chart-legend">
           <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#55efc4;"></span> 순수 생산량 (Net)</div>
-          <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#ff7675;"></span> 삭제량 (리팩토링)</div>
+          <div class="chart-legend-item"><span class="chart-legend-dot" style="background:rgba(255,118,117,0.35);"></span> 삭제량 (리팩토링)</div>
         </div>
         <!-- Summary stats -->
         <div class="chart-summary">
           <div class="chart-stat">
-            <span class="chart-stat-number hl-green">+11,082</span>
-            <span class="chart-stat-label">순수 코드 증가 (16일)</span>
+            <span class="chart-stat-number hl-green">+50,946</span>
+            <span class="chart-stat-label">순수 코드 증가 (32일)</span>
           </div>
           <div class="chart-stat">
-            <span class="chart-stat-number hl-blue">+16,349</span>
+            <span class="chart-stat-number hl-blue">+124,449</span>
             <span class="chart-stat-label">총 추가량</span>
           </div>
           <div class="chart-stat">
-            <span class="chart-stat-number hl-coral">-5,267</span>
+            <span class="chart-stat-number hl-coral">-73,864</span>
             <span class="chart-stat-label">총 삭제량</span>
           </div>
           <div class="chart-stat">
-            <span class="chart-stat-number hl-orange">32%</span>
+            <span class="chart-stat-number hl-orange">59%</span>
             <span class="chart-stat-label">평균 삭제율</span>
           </div>
           <div class="chart-stat">
-            <span class="chart-stat-number hl-accent">693줄</span>
+            <span class="chart-stat-number hl-accent">1,644줄</span>
             <span class="chart-stat-label">일평균 순증가</span>
           </div>
         </div>
         <p class="chart-caption">
-          * 3/24(최초 커밋, +10,569줄) 제외 기준 · GDScript(.gd) 파일만 집계 · 실제 1인 개발 프로젝트 데이터
+          * GDScript(.gd)+C#(.cs) 집계 · addons 제외 · 4/12 C# 마이그레이션(+31,565/-27,641) 포함 · 실제 1인 개발 프로젝트 데이터
         </p>
       </div>
 
@@ -1022,11 +1224,11 @@ footer {
 <!-- About -->
 <section id="about">
   <div class="container">
-    <span class="section-label">05 — About</span>
-    <h2 class="section-title">개발자의 언어로 혁신을 리드합니다</h2>
+    <span class="section-label reveal">05 — About</span>
+    <h2 class="section-title reveal">개발자의 언어로 혁신을 리드합니다</h2>
 
     <div class="about-content">
-      <div class="about-text">
+      <div class="about-text reveal reveal-delay-1">
         <p>
           20년간 게임 업계에서 개발자로, 그리고 PD로 일하며
           "기술과 제품 사이의 간극"을 직접 경험했습니다.
@@ -1055,7 +1257,7 @@ footer {
         </div>
       </div>
 
-      <div class="about-timeline">
+      <div class="about-timeline reveal reveal-delay-2">
         <div class="timeline-item">
           <div class="timeline-year">CURRENT</div>
           <div class="timeline-role">AI Workflow Architect</div>
@@ -1083,6 +1285,129 @@ footer {
     <p>© 2026 AI Workflow Portfolio. Built with Claude.</p>
   </div>
 </footer>
+
+<script>
+// ===== Hero Particle Animation =====
+(function(){
+  const canvas = document.getElementById('heroCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], mouse = {x: -1000, y: -1000};
+
+  function resize(){
+    W = canvas.width = canvas.parentElement.offsetWidth;
+    H = canvas.height = canvas.parentElement.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Track mouse for interactivity
+  document.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+
+  const PARTICLE_COUNT = 60;
+  const CONNECT_DIST = 140;
+
+  class Particle {
+    constructor(){
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.vy = (Math.random() - 0.5) * 0.4;
+      this.r = Math.random() * 2 + 0.5;
+      this.color = Math.random() > 0.5 ? 'rgba(124,108,240,' : 'rgba(0,210,160,';
+      this.baseAlpha = Math.random() * 0.5 + 0.2;
+    }
+    update(){
+      this.x += this.vx;
+      this.y += this.vy;
+      if(this.x < 0 || this.x > W) this.vx *= -1;
+      if(this.y < 0 || this.y > H) this.vy *= -1;
+
+      // Mouse repulsion
+      const dx = this.x - mouse.x;
+      const dy = this.y - mouse.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if(dist < 120){
+        const force = (120 - dist) / 120 * 0.02;
+        this.vx += dx / dist * force;
+        this.vy += dy / dist * force;
+      }
+
+      // Damping
+      this.vx *= 0.999;
+      this.vy *= 0.999;
+    }
+    draw(){
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = this.color + this.baseAlpha + ')';
+      ctx.fill();
+    }
+  }
+
+  for(let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+
+  function animate(){
+    ctx.clearRect(0, 0, W, H);
+
+    // Update and draw particles
+    particles.forEach(p => { p.update(); p.draw(); });
+
+    // Draw connections
+    for(let i = 0; i < particles.length; i++){
+      for(let j = i+1; j < particles.length; j++){
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist < CONNECT_DIST){
+          const alpha = (1 - dist / CONNECT_DIST) * 0.12;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = 'rgba(124,108,240,' + alpha + ')';
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// ===== Scroll Reveal =====
+(function(){
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+})();
+
+// ===== Nav scroll effect =====
+(function(){
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if(window.scrollY > 80){
+      nav.style.background = 'rgba(6,6,12,0.92)';
+      nav.style.borderBottomColor = 'rgba(108,92,231,0.1)';
+    } else {
+      nav.style.background = 'rgba(6,6,12,0.7)';
+      nav.style.borderBottomColor = 'rgba(255,255,255,0.06)';
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
