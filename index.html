@@ -744,13 +744,22 @@ nav .nav-links a:hover { color: var(--accent-light); text-decoration: none; }
 }
 
 .pipeline-legend {
-  display: flex; gap: 2rem; margin-top: 2rem; padding-top: 2rem;
-  border-top: 1px solid var(--border);
+  display: flex; gap: 1.6rem; flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+  padding: 1rem 1.4rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
 }
-.legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: var(--text-dim); }
-.legend-dot { width: 12px; height: 12px; border-radius: 50%; }
+.legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: var(--text-dim); font-weight: 600; }
+.legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
 .legend-dot.human { background: var(--human); box-shadow: 0 0 8px rgba(0,210,160,0.4); }
 .legend-dot.ai { background: var(--ai); box-shadow: 0 0 8px rgba(124,108,240,0.4); }
+.legend-dot.both {
+  background: linear-gradient(135deg, var(--human) 50%, var(--ai) 50%);
+  box-shadow: 0 0 6px rgba(0,210,160,0.3), 0 0 6px rgba(124,108,240,0.3);
+}
 
 /* Harness Callout */
 .harness-callout {
@@ -1606,6 +1615,21 @@ footer .footer-sep { color: var(--text-muted); opacity: 0.5; }
       <span class="hl-green">사람이 판단</span>하는 지점과 <span class="hl-accent">AI가 실행</span>하는 지점이 명확히 구분됩니다.
     </p>
 
+    <div class="pipeline-legend reveal">
+      <div class="legend-item">
+        <div class="legend-dot human"></div>
+        <span>사람이 판단</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot ai"></div>
+        <span>AI가 실행</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot both"></div>
+        <span>사람 + AI 협업</span>
+      </div>
+    </div>
+
     <div class="pipeline-flow reveal">
       <!-- Step 1 -->
       <div class="pipeline-step">
@@ -1798,16 +1822,6 @@ footer .footer-sep { color: var(--text-muted); opacity: 0.5; }
       </p>
     </div>
 
-    <div class="pipeline-legend">
-      <div class="legend-item">
-        <div class="legend-dot human"></div>
-        <span>사람이 판단</span>
-      </div>
-      <div class="legend-item">
-        <div class="legend-dot ai"></div>
-        <span>AI가 실행</span>
-      </div>
-    </div>
   </div>
 </section>
 
