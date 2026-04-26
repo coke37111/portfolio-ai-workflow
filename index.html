@@ -32,7 +32,7 @@
   --glow-green: 0 0 60px rgba(0,210,160,0.12), 0 0 120px rgba(0,210,160,0.04);
 }
 
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; font-size: 17px; }
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: var(--bg);
@@ -379,7 +379,7 @@ nav .nav-links a:hover { color: var(--accent-light); text-decoration: none; }
 .env-step.step-3 .step-num { background: var(--human-bg); color: var(--human); border: 1px solid rgba(0,210,160,0.3); }
 .env-step .step-icon { font-size: 1.6rem; margin-bottom: 0.8rem; }
 .env-step h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.6rem; letter-spacing: -0.01em; }
-.env-step p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.65; }
+.env-step p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; }
 .env-step .env-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; margin-top: 0.9rem; }
 .env-step .env-tag {
   font-size: 0.68rem; font-weight: 600; padding: 0.25rem 0.6rem;
@@ -544,8 +544,8 @@ nav .nav-links a:hover { color: var(--accent-light); text-decoration: none; }
 }
 .ts-tool.ts-built .ts-name { color: var(--accent-light); }
 .ts-purpose {
-  font-size: 0.76rem; color: var(--text-dim);
-  line-height: 1.55;
+  font-size: 0.85rem; color: var(--text-dim);
+  line-height: 1.6;
 }
 .ts-badge {
   position: absolute; top: 0.6rem; right: 0.6rem;
@@ -761,6 +761,91 @@ nav .nav-links a:hover { color: var(--accent-light); text-decoration: none; }
   box-shadow: 0 0 6px rgba(0,210,160,0.3), 0 0 6px rgba(124,108,240,0.3);
 }
 
+/* Step 10 — 두 모드 분기 카드 */
+.dual-mode {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+.dm-card {
+  padding: 1.1rem 1.2rem;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  position: relative; overflow: hidden;
+  transition: all 0.3s;
+  backdrop-filter: blur(10px);
+}
+.dm-card.dm-default {
+  border-color: rgba(0,210,160,0.18);
+  background: rgba(0,210,160,0.04);
+}
+.dm-card.dm-accel {
+  border-color: rgba(124,108,240,0.22);
+  background: rgba(124,108,240,0.05);
+}
+.dm-card:hover { transform: translateY(-2px); }
+.dm-label {
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+.dm-default .dm-label { color: var(--human); }
+.dm-accel .dm-label   { color: var(--accent-light); }
+.dm-flow {
+  display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;
+  margin-bottom: 0.7rem; font-size: 0.84rem;
+}
+.dm-actor {
+  font-weight: 700; color: var(--text);
+  padding: 0.25rem 0.6rem; border-radius: 6px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+}
+.dm-action {
+  font-weight: 600; color: var(--text-dim);
+}
+.dm-result {
+  font-weight: 800; color: var(--text);
+  padding: 0.25rem 0.7rem; border-radius: 6px;
+  background: rgba(0,210,160,0.12);
+  border: 1px solid rgba(0,210,160,0.3);
+  color: var(--human);
+}
+.dm-arrow { color: var(--text-muted); font-size: 0.95rem; }
+.dm-arrow.dm-branch { font-size: 1.1rem; color: var(--accent-light); }
+.dm-policy {
+  display: flex; flex-direction: column; gap: 0.45rem;
+  margin: 0.5rem 0 0.8rem;
+}
+.dm-policy-row {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.55rem 0.8rem; border-radius: 8px;
+  font-size: 0.82rem; color: var(--text-dim);
+}
+.dm-policy-row strong { color: var(--text); }
+.dm-policy-row.dm-pass {
+  background: rgba(0,210,160,0.07);
+  border: 1px solid rgba(0,210,160,0.18);
+}
+.dm-policy-row.dm-fail {
+  background: rgba(253,203,110,0.06);
+  border: 1px solid rgba(253,203,110,0.18);
+}
+.dm-policy-row .dm-icon {
+  width: 18px; text-align: center; font-weight: 800;
+  flex-shrink: 0;
+}
+.dm-pass .dm-icon { color: var(--human); }
+.dm-fail .dm-icon { color: #fdcb6e; }
+.dm-desc {
+  font-size: 0.85rem !important;
+  color: var(--text-muted) !important;
+  line-height: 1.75 !important;
+  margin: 0 !important;
+}
+
 /* Harness Callout */
 .harness-callout {
   margin-top: 2.5rem; padding: 2.2rem 2.5rem;
@@ -810,7 +895,7 @@ nav .nav-links a:hover { color: var(--accent-light); text-decoration: none; }
 .k-node:hover::after { opacity: 1; }
 .k-node .k-icon { font-size: 1.6rem; margin-bottom: 0.6rem; position: relative; z-index: 1; }
 .k-node .k-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; position: relative; z-index: 1; }
-.k-node .k-desc { font-size: 0.75rem; color: var(--text-muted); position: relative; z-index: 1; }
+.k-node .k-desc { font-size: 0.82rem; color: var(--text-muted); position: relative; z-index: 1; }
 .k-arrow {
   font-size: 1.2rem; color: var(--accent); padding: 0 0.8rem;
   flex-shrink: 0; opacity: 0.5;
@@ -1032,7 +1117,7 @@ nav .nav-links a:hover { color: var(--accent-light); text-decoration: none; }
   letter-spacing: 0.1em; margin-bottom: 0.4rem;
 }
 .timeline-role { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
-.timeline-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.7; }
+.timeline-desc { font-size: 0.88rem; color: var(--text-dim); line-height: 1.75; }
 
 /* 프로젝트 목록 */
 .project-list-section {
@@ -1159,6 +1244,9 @@ footer .footer-sep { color: var(--text-muted); opacity: 0.5; }
 
   /* 실패와 학습 */
   .learn-grid { grid-template-columns: 1fr; }
+
+  /* Step 10 dual-mode 카드 */
+  .dual-mode { grid-template-columns: 1fr; }
 
   /* Pipeline */
   .pipeline-step { grid-template-columns: 56px 1fr; }
@@ -1519,6 +1607,7 @@ footer .footer-sep { color: var(--text-muted); opacity: 0.5; }
           <div class="ts-tool"><div class="ts-name">RTK</div><div class="ts-purpose">명령 정제 — 오해↓ 토큰 비용↓</div></div>
           <div class="ts-tool ts-built"><div class="ts-name">Hooks</div><div class="ts-purpose">세션 시작 컨텍스트 주입 + 작업 완료 검증 강제화</div><span class="ts-badge">자체</span></div>
           <div class="ts-tool"><div class="ts-name">Discord 연동</div><div class="ts-purpose">원격 지시·보고 — 이동 중 운영 가능</div></div>
+          <div class="ts-tool ts-built"><div class="ts-name">Lead Agent</div><div class="ts-purpose">정책 기반 PR 자동 승인 + 페르소나 충돌 조정 + 감사 추적</div><span class="ts-badge">자체</span></div>
         </div>
       </div>
     </div>
@@ -1803,6 +1892,56 @@ footer .footer-sep { color: var(--text-muted); opacity: 0.5; }
             하네스를 통과한 코드만 PR로 생성됩니다.
             테스트 결과, 변경 사항, 기획 대응표가 자동으로 문서화됩니다.
           </p>
+        </div>
+      </div>
+      <!-- Step 10 -->
+      <div class="pipeline-step">
+        <div class="step-line">
+          <div class="step-dot both">10</div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <div class="step-header">
+            <span class="step-title">PR 승인 & 머지</span>
+            <span class="step-badge both-badge">HUMAN + AI</span>
+            <span class="step-agent">🎯 리드 에이전트</span>
+          </div>
+          <p class="step-desc">
+            PR이 머지되어야 비로소 한 사이클이 완성됩니다.
+            <span class="hl-orange">조직의 신뢰도</span>에 맞춰 두 가지 모드 중 선택할 수 있도록 설계했습니다 —
+            사람이 모든 PR을 직접 승인할 수도, 정책 조건을 만족하는 PR만 자동 머지할 수도 있습니다.
+          </p>
+          <div class="dual-mode">
+            <div class="dm-card dm-default">
+              <div class="dm-label">기본 모드 — 사람 승인</div>
+              <div class="dm-flow">
+                <span class="dm-actor">👤 개발 리드</span>
+                <span class="dm-arrow">→</span>
+                <span class="dm-action">검토 · 승인</span>
+                <span class="dm-arrow">→</span>
+                <span class="dm-result">머지</span>
+              </div>
+              <p class="dm-desc">전통적이고 안전한 방식. 도입 초기·민감한 모듈·라이브 영향 큰 코드에 적용. AI 도입을 처음 시작하는 팀의 기본값.</p>
+            </div>
+            <div class="dm-card dm-accel">
+              <div class="dm-label">가속 모드 — 정책 기반 자동 승인</div>
+              <div class="dm-flow">
+                <span class="dm-actor">🎯 리드 에이전트</span>
+                <span class="dm-arrow">→</span>
+                <span class="dm-action">정책 검증</span>
+                <span class="dm-arrow dm-branch">⇣</span>
+              </div>
+              <div class="dm-policy">
+                <div class="dm-policy-row dm-pass"><span class="dm-icon">✓</span> 정책 통과 → <strong>자동 머지</strong> · 사람은 사후 메타 검토</div>
+                <div class="dm-policy-row dm-fail"><span class="dm-icon">✗</span> 정책 미달 → <strong>사람에게 에스컬레이션</strong></div>
+              </div>
+              <p class="dm-desc">정책 예시 — 하네스 모두 통과 + 변경 라인 수 임계 이하 + 영향도 낮음 + 리뷰 필수 모듈 미해당. 신뢰도가 쌓이는 만큼 자동 승인 비율을 단계적으로 확대.</p>
+            </div>
+          </div>
+          <div class="step-detail">
+            🎯 <strong>리드 에이전트의 책임</strong> — SYS · PLAN · CON · ART 4 페르소나의 의견이 충돌할 때 <span class="hl-accent">조정·우선순위를 결정</span>하고,
+            정책 기반 승인/에스컬레이션을 판단하며, "왜 이 PR이 머지됐는가"를 자동으로 기록해 <span class="hl-blue">감사 추적</span>을 가능하게 합니다.
+          </div>
         </div>
       </div>
     </div>
