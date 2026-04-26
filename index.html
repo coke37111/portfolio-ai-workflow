@@ -393,6 +393,226 @@ nav .nav-links a:hover { color: var(--accent-light); text-decoration: none; }
   padding: 0 0.75rem; color: var(--text-muted); font-size: 1.2rem;
 }
 
+/* 가축 메타포 — 큰 헤드라인 */
+.livestock-headline {
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 800;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 1.2rem;
+}
+.livestock-headline .livestock-key {
+  background: linear-gradient(135deg, #fdcb6e 0%, #ff7675 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 가축 메타포 — 길들이기 흐름 */
+.livestock-flow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 0;
+  align-items: stretch;
+  margin: 1.6rem 0 0.5rem;
+  padding: 1.4rem 1.2rem;
+  background: rgba(124,108,240,0.04);
+  border: 1px solid rgba(124,108,240,0.12);
+  border-radius: 14px;
+}
+.livestock-flow .lf-item {
+  padding: 0.8rem 1rem;
+  text-align: center;
+}
+.livestock-flow .lf-label {
+  font-size: 0.66rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.livestock-flow .lf-from .lf-label { color: #ff7675; }
+.livestock-flow .lf-mid  .lf-label { color: #fdcb6e; }
+.livestock-flow .lf-to   .lf-label { color: var(--human); }
+.livestock-flow .lf-text {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+.livestock-flow .lf-text strong { color: var(--text); }
+.livestock-flow .lf-arrow {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; color: var(--text-muted); padding: 0 0.4rem;
+}
+
+/* 정착 3축 */
+.settle-axes {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.2rem;
+  margin-bottom: 3.5rem;
+}
+.settle-axis {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.8rem 1.6rem;
+  position: relative; overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+  backdrop-filter: blur(10px);
+}
+.settle-axis::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  opacity: 0.85;
+}
+.settle-axis.sa-structure::before { background: linear-gradient(90deg, var(--accent), var(--accent-light)); }
+.settle-axis.sa-data::before      { background: linear-gradient(90deg, var(--human), #55efc4); }
+.settle-axis.sa-people::before    { background: linear-gradient(90deg, #fdcb6e, #e17055); }
+.settle-axis:hover { transform: translateY(-3px); border-color: var(--border-glow); box-shadow: var(--glow-purple); }
+.settle-axis .sa-num {
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.18em; color: var(--text-muted);
+  margin-bottom: 0.6rem;
+}
+.settle-axis .sa-title {
+  font-size: 1.5rem; font-weight: 900;
+  letter-spacing: -0.02em; margin-bottom: 0.2rem;
+}
+.settle-axis.sa-structure .sa-title { color: var(--accent-light); }
+.settle-axis.sa-data .sa-title      { color: #55efc4; }
+.settle-axis.sa-people .sa-title    { color: #fdcb6e; }
+.settle-axis .sa-sub {
+  font-size: 0.85rem; font-weight: 600;
+  color: var(--text); margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+.settle-axis p {
+  font-size: 0.84rem; color: var(--text-dim);
+  line-height: 1.75; margin-bottom: 1rem;
+}
+.settle-axis p strong { color: var(--text); }
+.sa-tag-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.sa-tag {
+  font-size: 0.68rem; font-weight: 600;
+  padding: 0.3rem 0.7rem; border-radius: 100px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text-dim);
+  letter-spacing: 0.02em;
+}
+
+/* 도구 스택 */
+.tool-stack {
+  margin-bottom: 3.5rem;
+  display: flex; flex-direction: column; gap: 1rem;
+}
+.ts-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  padding: 1.4rem 0;
+  border-top: 1px solid var(--border);
+}
+.ts-row:last-child { border-bottom: 1px solid var(--border); }
+.ts-cat {
+  font-size: 0.78rem; font-weight: 700;
+  color: var(--accent-light);
+  letter-spacing: 0.04em;
+  padding-top: 0.3rem;
+}
+.ts-tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.8rem;
+}
+.ts-tool {
+  position: relative;
+  padding: 0.95rem 1.1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: all 0.3s;
+}
+.ts-tool:hover { border-color: var(--border-glow); transform: translateY(-2px); }
+.ts-tool.ts-built {
+  background: rgba(124,108,240,0.06);
+  border-color: rgba(124,108,240,0.22);
+}
+.ts-name {
+  font-size: 0.92rem; font-weight: 700;
+  letter-spacing: -0.01em; margin-bottom: 0.2rem;
+}
+.ts-tool.ts-built .ts-name { color: var(--accent-light); }
+.ts-purpose {
+  font-size: 0.76rem; color: var(--text-dim);
+  line-height: 1.55;
+}
+.ts-badge {
+  position: absolute; top: 0.6rem; right: 0.6rem;
+  font-size: 0.6rem; font-weight: 700;
+  padding: 0.15rem 0.45rem; border-radius: 4px;
+  background: rgba(124,108,240,0.18);
+  color: var(--accent-light);
+  letter-spacing: 0.06em;
+}
+
+/* 실패와 학습 */
+.learn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem;
+  margin-bottom: 3.5rem;
+}
+.learn-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.8rem 1.6rem;
+  position: relative; overflow: hidden;
+  transition: all 0.4s;
+  backdrop-filter: blur(10px);
+}
+.learn-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background: linear-gradient(90deg, #ff7675, #55efc4);
+}
+.learn-card:hover { border-color: var(--border-glow); box-shadow: var(--glow-purple); }
+.lc-head { margin-bottom: 1.2rem; }
+.lc-label {
+  display: inline-block; font-size: 0.66rem; font-weight: 700;
+  letter-spacing: 0.18em; color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+.lc-head h4 {
+  font-size: 1.15rem; font-weight: 800;
+  letter-spacing: -0.02em; line-height: 1.3;
+  color: var(--text);
+}
+.lc-fail, .lc-success {
+  display: grid; grid-template-columns: 28px 1fr; gap: 0.7rem;
+  padding: 0.85rem 1rem; border-radius: 10px;
+}
+.lc-fail {
+  background: rgba(255,118,117,0.06);
+  border: 1px solid rgba(255,118,117,0.15);
+}
+.lc-success {
+  background: rgba(0,210,160,0.06);
+  border: 1px solid rgba(0,210,160,0.15);
+}
+.lc-fail .lc-icon  { color: #ff7675; font-weight: 800; font-size: 1.1rem; text-align: center; line-height: 1.4; }
+.lc-success .lc-icon { color: var(--human); font-weight: 800; font-size: 1.1rem; text-align: center; line-height: 1.4; }
+.lc-text {
+  font-size: 0.83rem; color: var(--text-dim);
+  line-height: 1.7;
+}
+.lc-text strong { color: var(--text); margin-right: 0.3rem; }
+.lc-arrow {
+  font-size: 1rem; color: var(--text-muted);
+  text-align: center; padding: 0.4rem 0;
+  opacity: 0.6;
+}
+
 /* 개발 리드 전략 */
 .strategy-lead-card {
   background: var(--bg-card);
@@ -913,6 +1133,24 @@ footer .footer-sep { color: var(--text-muted); opacity: 0.5; }
   /* Strategy lead card */
   .strategy-lead-card { grid-template-columns: 1fr; padding: 1.8rem 1.5rem; }
 
+  /* 가축 메타포 흐름 — 세로 스택 */
+  .livestock-flow {
+    grid-template-columns: 1fr;
+    padding: 1rem 0.8rem;
+  }
+  .livestock-flow .lf-arrow { transform: rotate(90deg); padding: 0.3rem 0; }
+  .livestock-headline { font-size: 1.4rem; }
+
+  /* 정착 3축 세로 스택 */
+  .settle-axes { grid-template-columns: 1fr; gap: 1rem; }
+
+  /* 도구 스택 */
+  .ts-row { grid-template-columns: 1fr; gap: 0.8rem; padding: 1.2rem 0; }
+  .ts-tools { grid-template-columns: 1fr; }
+
+  /* 실패와 학습 */
+  .learn-grid { grid-template-columns: 1fr; }
+
   /* Pipeline */
   .pipeline-step { grid-template-columns: 56px 1fr; }
   .pipeline-step .step-content { padding: 0.2rem 0 1.8rem 1rem; }
@@ -1112,14 +1350,38 @@ footer .footer-sep { color: var(--text-muted); opacity: 0.5; }
       이것이 <span class="hl-green">워크플로우가 현장에 뿌리내리는</span> 방법입니다.
     </p>
 
-    <!-- AI 본질 이해 -->
+    <!-- AI 본질 이해 — 가축 메타포 -->
     <div class="ai-nature-card reveal">
-      <div class="nature-meta">AI의 본질 이해 — 전제조건</div>
-      <p style="font-size:1.05rem; font-weight:600; color:var(--text); margin-bottom:1.5rem; line-height:1.6;">
-        AI는 <span class="hl-accent">"무엇을 → 어떻게"</span>를 굉장히 빠르고 정확하게 실행합니다.<br>
-        하지만 <span class="hl-coral">"무엇을"과 "어떻게"가 무엇인지</span>를 스스로 해석하는 데는 잦은 실수를 범합니다.
+      <div class="nature-meta">AI의 본질 이해 — 정의를 다시 쓰다</div>
+      <div class="livestock-headline">
+        AI는 사람도 도구도 아니다 —<br>
+        <span class="livestock-key">길들여야 할 대상</span>이다.
+      </div>
+      <p style="font-size:0.95rem; color:var(--text-dim); margin-bottom:1.6rem; line-height:1.85;">
+        사람으로 보면 한없이 부족하고, 도구로 보면 별것 없어 보입니다.
+        가축으로 봐야 비로소 보입니다. 가축은 쓰임에 맞는 <strong style="color:var(--accent-light);">하네스(Harness)</strong>를 채워야 일을 합니다.
+        — 본래 안장·등자·고삐를 뜻하는 그 하네스. 우리가 지금 코드 파이프라인에 채우는 것과 같은 단어입니다.
+        좋은 도구를 닥치는 대로 붙이면 오히려 어긋나고, AI는 상충하는 지시 앞에서 묻지 않고 무시하거나 아무거나 씁니다.
       </p>
-      <div class="ai-nature-split">
+
+      <div class="livestock-flow">
+        <div class="lf-item lf-from">
+          <div class="lf-label">길들이기 전</div>
+          <div class="lf-text">목적을 모르는 채 빠르게 달립니다.<br>잘못된 가정 위에서 완벽히 달립니다.</div>
+        </div>
+        <div class="lf-arrow">→</div>
+        <div class="lf-item lf-mid">
+          <div class="lf-label">길들이는 과정</div>
+          <div class="lf-text">하네스 · 지식 · 검증 · 회복 구조 — <strong>워크플로우의 본질</strong></div>
+        </div>
+        <div class="lf-arrow">→</div>
+        <div class="lf-item lf-to">
+          <div class="lf-label">길들임에서 오는 자율성</div>
+          <div class="lf-text">목적지를 스스로 인지하고, 이탈해도 <strong>스스로 복귀</strong>합니다.</div>
+        </div>
+      </div>
+
+      <div class="ai-nature-split" style="margin-top:1.8rem;">
         <div class="nature-col col-strong">
           <div class="col-label">✅ AI가 잘하는 것</div>
           <h4>실행 (Execution)</h4>
@@ -1132,15 +1394,55 @@ footer .footer-sep { color: var(--text-muted); opacity: 0.5; }
           <p>목적지를 스스로 정의하거나, 맥락이 바뀌었을 때 방향을 재설정하는 데 혼란을 겪습니다. 잘못된 가정 위에서 완벽히 달립니다.</p>
         </div>
       </div>
+
       <div class="nature-conclusion">
-        그러므로 우리의 역할은 <strong>GPS</strong>입니다 — AI가 목적지를 명확히 인지하도록 설정하고,
-        이탈하더라도 <strong>스스로 복귀할 수 있는 구조</strong>를 만들어두는 것.
-        AI가 혼자서 목적지에 도착할 때까지, 그 경로를 설계하는 것이 우리의 핵심 역할입니다.
+        그러므로 우리의 역할은 <strong>사육사이자 GPS</strong>입니다 — 목적지를 인지시키고,
+        이탈했을 때 <strong>스스로 복귀할 수 있는 구조</strong>를 채워주는 일.
+        AI가 자기 책임 아래 목적지에 도착할 때까지, 그 길을 설계하는 것이 우리가 할 일입니다.
+      </div>
+    </div>
+
+    <!-- 정착 3축 — 구조 / 데이터 / 사람 -->
+    <span class="section-label reveal" style="display:inline-block; margin-bottom:1rem;">조직 정착 — 3축 전략</span>
+    <p class="section-desc reveal" style="margin-bottom:2rem;">
+      AI를 조직에 정착시키려면 <span class="hl-accent">구조 · 데이터 · 사람</span>이 동시에 움직여야 합니다.
+      한 축이라도 빠지면 도입은 표면에 머무릅니다.
+    </p>
+    <div class="settle-axes reveal">
+      <div class="settle-axis sa-structure">
+        <div class="sa-num">01</div>
+        <div class="sa-title">구조</div>
+        <div class="sa-sub">역할 기반 AI 편성</div>
+        <p>"ChatGPT 써보세요"가 아니라, 팀의 실제 역할(기획·QA·CS·라이브 운영)에 맞게 <strong>에이전트의 책임과 운영 규칙</strong>을 명문화합니다. 역할이 명확할수록 결과물 품질이 올라가고 사람이 검증할 범위는 좁아집니다.</p>
+        <div class="sa-tag-list">
+          <span class="sa-tag">SYS · PLAN · CON · ART</span>
+          <span class="sa-tag">에이전트 운영 규칙</span>
+        </div>
+      </div>
+      <div class="settle-axis sa-data">
+        <div class="sa-num">02</div>
+        <div class="sa-title">데이터</div>
+        <div class="sa-sub">KPI 기반 PoC 설계</div>
+        <p>도입 선언이 아니라 <strong>측정 가능한 지표를 먼저 정의</strong>하고, 소규모 실험으로 검증한 뒤 확산합니다. AI로 코드를 생산하는 순간 품질이 정량화되고, <span class="hl-green">순 코드 생산량</span>이라는 KPI가 비로소 의미를 가집니다.</p>
+        <div class="sa-tag-list">
+          <span class="sa-tag">+52,721줄 / 33일</span>
+          <span class="sa-tag">Net Output KPI</span>
+        </div>
+      </div>
+      <div class="settle-axis sa-people">
+        <div class="sa-num">03</div>
+        <div class="sa-title">사람</div>
+        <div class="sa-sub">개발 리드 중심 내부 확산</div>
+        <p>개발자의 저항은 두려움이 아니라 <strong>장인 정신</strong>에서 옵니다. 추상적 효율 대신 실제 코드와 테스트로 말하고, "코드를 빼앗긴다"가 아니라 "더 높은 곳에서 제품을 본다"임을 증명하며, <span class="hl-orange">파일럿을 함께 성공시키는</span> 방식으로 접근합니다.</p>
+        <div class="sa-tag-list">
+          <span class="sa-tag">개발 리드 VIP 전략</span>
+          <span class="sa-tag">파일럿 우선</span>
+        </div>
       </div>
     </div>
 
     <!-- 환경 세팅 3단계 -->
-    <span class="section-label reveal" style="display:inline-block; margin-bottom:1rem;">환경 구축 — 3단계 세팅</span>
+    <span class="section-label reveal" style="display:inline-block; margin-bottom:1rem;">기술 환경 — 3단계 세팅</span>
     <div class="env-steps reveal">
       <div class="env-step step-1">
         <div class="step-num">01</div>
@@ -1175,6 +1477,78 @@ footer .footer-sep { color: var(--text-muted); opacity: 0.5; }
           <span class="env-tag">KPI 측정</span>
           <span class="env-tag">회고 & 개선</span>
           <span class="env-tag">팀 확산</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 실제 도구 스택 -->
+    <span class="section-label reveal" style="display:inline-block; margin-bottom:1rem;">실제 도구 스택 — Built &amp; Adopted</span>
+    <p class="section-desc reveal" style="margin-bottom:2rem;">
+      자체 구축한 시스템과 외부 도구를 조합해 <span class="hl-accent">하네스를 완성</span>합니다.
+      각 도구는 명확한 문제를 해결하기 위해 채워진 파츠입니다.
+    </p>
+    <div class="tool-stack reveal">
+      <div class="ts-row">
+        <div class="ts-cat">Knowledge Layer</div>
+        <div class="ts-tools">
+          <div class="ts-tool ts-built"><div class="ts-name">LLM Wiki</div><div class="ts-purpose">기획서를 AI 친화 구조로 정제</div><span class="ts-badge">자체</span></div>
+          <div class="ts-tool ts-built"><div class="ts-name">Graphify</div><div class="ts-purpose">문서 간 관계를 그래프로 구축</div><span class="ts-badge">자체</span></div>
+          <div class="ts-tool"><div class="ts-name">Obsidian Vault</div><div class="ts-purpose">사람이 동일 그래프를 시각 탐색</div></div>
+        </div>
+      </div>
+      <div class="ts-row">
+        <div class="ts-cat">Model Division</div>
+        <div class="ts-tools">
+          <div class="ts-tool"><div class="ts-name">Codex</div><div class="ts-purpose">설계 — 구조적 정합성 확보</div></div>
+          <div class="ts-tool"><div class="ts-name">Claude</div><div class="ts-purpose">실행 — 자율적 구현력</div></div>
+          <div class="ts-tool"><div class="ts-name">Octo</div><div class="ts-purpose">교차 검증 — 단일 모델 사각지대 보완</div></div>
+        </div>
+      </div>
+      <div class="ts-row">
+        <div class="ts-cat">Command &amp; Control</div>
+        <div class="ts-tools">
+          <div class="ts-tool"><div class="ts-name">RTK</div><div class="ts-purpose">명령 정제 — 오해↓ 토큰 비용↓</div></div>
+          <div class="ts-tool ts-built"><div class="ts-name">Hooks</div><div class="ts-purpose">세션 시작 컨텍스트 주입 + 작업 완료 검증 강제화</div><span class="ts-badge">자체</span></div>
+          <div class="ts-tool"><div class="ts-name">Discord 연동</div><div class="ts-purpose">원격 지시·보고 — 이동 중 운영 가능</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 실패와 학습 -->
+    <span class="section-label reveal" style="display:inline-block; margin-bottom:1rem;">실패와 학습 — 길들이며 배운 것</span>
+    <p class="section-desc reveal" style="margin-bottom:2rem;">
+      처음부터 작동한 것은 없습니다.
+      <span class="hl-coral">시도 → 실패</span>를 거쳐 다듬은 운영 원칙들이 지금의 워크플로우입니다.
+    </p>
+    <div class="learn-grid reveal">
+      <div class="learn-card">
+        <div class="lc-head">
+          <span class="lc-label">CASE 01</span>
+          <h4>에이전트 자율 토론</h4>
+        </div>
+        <div class="lc-fail">
+          <span class="lc-icon">✗</span>
+          <div class="lc-text"><strong>시도</strong> — 페르소나에 자율 토론을 부여해 합의된 결론을 도출하게 함</div>
+        </div>
+        <div class="lc-arrow">↓</div>
+        <div class="lc-success">
+          <span class="lc-icon">✓</span>
+          <div class="lc-text"><strong>학습</strong> — 페르소나를 <span class="hl-accent">인격체로 인식하고 업무를 배분</span>하자 결과물의 일관성이 높아짐. 이동 중 디스코드로 각 페르소나에게 지시·보고 받는 운영 방식이 정착</div>
+        </div>
+      </div>
+      <div class="learn-card">
+        <div class="lc-head">
+          <span class="lc-label">CASE 02</span>
+          <h4>AI 보고의 신뢰</h4>
+        </div>
+        <div class="lc-fail">
+          <span class="lc-icon">✗</span>
+          <div class="lc-text"><strong>시도</strong> — AI가 "완료했습니다" 보고를 신뢰하고 후속 작업 진행 → 기능이 실제로는 미동작, 대규모 롤백</div>
+        </div>
+        <div class="lc-arrow">↓</div>
+        <div class="lc-success">
+          <span class="lc-icon">✓</span>
+          <div class="lc-text"><strong>학습</strong> — <span class="hl-green">grep · 재검증을 강제하는 원칙</span>을 수립. AI 보고와 실제 코드 상태를 분리해 검증한 이후 <strong>15+ PR을 무결합 병합</strong></div>
         </div>
       </div>
     </div>
